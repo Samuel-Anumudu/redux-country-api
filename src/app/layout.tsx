@@ -1,8 +1,11 @@
-import { Inter } from "next/font/google";
+import { Nunito_Sans } from "next/font/google";
 import Header from "@/components/Header";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const nunitoSans = Nunito_Sans({
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+});
 
 export const metadata = {
   title: "Country API",
@@ -18,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={nunitoSans.className}>
         <Header />
         <main>{children}</main>
       </body>

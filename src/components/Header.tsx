@@ -1,12 +1,12 @@
 import Link from "next/link";
 export default function Header() {
   return (
-    <header>
-      <nav>
+    <header className="bg-lime-300">
+      <nav className="flex justify-between">
         <div className="logo">
           <Link href="/">Logo</Link>
         </div>
-        <ul>
+        <ul className="flex">
           <li>
             <Link href="/about">About</Link>
           </li>
