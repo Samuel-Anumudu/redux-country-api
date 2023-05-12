@@ -7,11 +7,14 @@ import Link from "next/link";
 import LoadingPage from "./loading";
 import CountryPage from "@/components/CountryPage";
 import CountrySearch from "@/components/CountrySearch";
+import CountryFilter from "@/components/CountryFilter";
 
 export default function HomePage() {
+  // States
   const [countriesData, setCountriesData] = useState<Countries[]>([]);
   const [loading, setIsLoading] = useState<boolean>(true);
   const [searchText, setSearchText] = useState<string>("");
+  const [region, setRegion] = useState<string>("");
 
   useEffect(() => {
     const getAllCountries = async () => {
@@ -22,30 +25,39 @@ export default function HomePage() {
     getAllCountries();
   }, []);
 
+  // Functions
+
+  const filteredRegion = countriesData.filter((country) => {
+    return region
+      ? country.region.toLowerCase() === region.toLowerCase()
+      : countriesData;
+  });
+
+  const searchedCountries = filteredRegion.filter((country) =>
+    country.name.common.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   if (loading) {
     return <LoadingPage />;
   }
 
-  const searchedCountries = countriesData.filter((country) =>
-    country.name.common.toLowerCase().includes(searchText.toLowerCase())
-  );
-
   return (
-    <section className="block lg:grid grid-cols-4">
+    <section>
       <CountrySearch getSearchResult={(value) => setSearchText(value)} />
-      {!searchedCountries.length && (
-        <p>No country by the name {`"${searchText}"`}</p>
-      )}
-      {searchedCountries.map((country: Countries, index: string | number) => (
-        <Link
-          key={country.name.common ?? index}
-          href={`/${country.name.common}`}
-        >
-          <Suspense fallback={<LoadingPage />}>
-            <CountryPage country={country} />
-          </Suspense>
-        </Link>
-      ))}
+      <CountryFilter getFilteredRegion={(value) => setRegion(value)} />
+      <div className="block lg:grid grid-cols-4">
+        {!searchedCountries.length && <p>No country found</p>}
+        {searchedCountries.map((country: Countries, index: string | number) => (
+          <Link
+            key={country.name.common ?? index}
+            href={`/${country.name.common}`}
+          >
+            <Suspense fallback={<LoadingPage />}>
+              <CountryPage country={country} />
+            </Suspense>
+          </Link>
+        ))}
+      </div>
     </section>
   );
 }
