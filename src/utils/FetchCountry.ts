@@ -1,12 +1,9 @@
 export async function fetchCountries() {
-  const res = await fetch(
-    "https://restcountries.com/v3.1/independent?status=true",
-    {
-      next: {
-        revalidate: 60,
-      },
-    }
-  );
+  const res = await fetch("https://restcountries.com/v3.1/all", {
+    next: {
+      revalidate: 60,
+    },
+  });
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
