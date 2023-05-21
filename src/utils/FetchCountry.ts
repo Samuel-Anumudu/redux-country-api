@@ -13,6 +13,7 @@ export async function fetchCountries() {
 
 export async function fetchCountry(name: string) {
   await new Promise((resolve) => setTimeout(resolve, 1000));
+
   const res = await fetch(
     `https://restcountries.com/v3.1/name/${name}
     `,

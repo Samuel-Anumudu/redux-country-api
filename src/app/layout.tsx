@@ -1,6 +1,6 @@
 import { Nunito_Sans } from "next/font/google";
 import Header from "@/components/Header";
-import Providers from "@/redux/provider";
+// import Providers from "@/redux/provider";
 import "./globals.css";
 
 const nunitoSans = Nunito_Sans({
@@ -24,9 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={nunitoSans.className}>
         <Header />
-        <main>
-          <Providers>{children}</Providers>
-        </main>
+        <main>{children}</main>
       </body>
     </html>
   );
